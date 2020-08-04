@@ -1,11 +1,10 @@
 const Book = require('../models/book');
-const { update } = require('../models/book');
 
 module.exports = {
     async getAll (req, res) {
         const books = await Book.findAll();
 
-        return res.json(books);
+        return res.status(200).json(books);
     },
 
     async getById (req, res) {
@@ -14,9 +13,9 @@ module.exports = {
         const book = await Book.findByPk(bookId);
 
         if(!book) {
-            return res.json({
+            return res.status(200).json({
                 message: `Book with the id ${bookId} cannot be found.`
-            })
+            });
         } else {
             return res.json(book);
         }
@@ -27,7 +26,7 @@ module.exports = {
 
         await Book.create({name, description, releaseDate, imageURL});
 
-        res.json({
+        res.status(201).json({
             message: 'Book created!'
         })
     },
@@ -39,7 +38,7 @@ module.exports = {
         const book = await Book.findByPk(bookId);
 
         if(!book) {
-            return res.json({
+            return res.status(200).json({
                 message: `Book with the id ${bookId} cannot be found.`
             })
         } else {
