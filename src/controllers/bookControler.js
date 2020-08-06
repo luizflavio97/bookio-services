@@ -21,10 +21,20 @@ module.exports = {
         }
     },
 
-    async createBook (req, res) {
-        const {name, description, releaseDate, imageURL} = req.body;
+    async getBookByName (req, res) {
+        const { name } = req.params
 
-        await Book.create({name, description, releaseDate, imageURL});
+        const book = await Book.findOne({
+            where: {
+                name: name
+            }
+        });
+    },
+
+    async createBook (req, res) {
+        const {name, author, description, releaseDate, imageURL} = req.body;
+
+        await Book.create({name, author, description, releaseDate, imageURL});
 
         res.status(201).json({
             message: 'Book created!'
@@ -33,7 +43,7 @@ module.exports = {
 
     async updateBook (req, res) {
         const { bookId } = req.params;
-        const {name, description, releaseDate, imageURL} = req.body;
+        const {name, author, description, releaseDate, imageURL} = req.body;
 
         const book = await Book.findByPk(bookId);
 
@@ -42,7 +52,7 @@ module.exports = {
                 message: `Book with the id ${bookId} cannot be found.`
             })
         } else {
-            await Book.update({ name, description, releaseDate, imageURL}, {
+            await Book.update({ name, author, description, releaseDate, imageURL}, {
                 where: {
                     id: bookId
                 }
