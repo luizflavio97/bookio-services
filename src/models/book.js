@@ -5,7 +5,7 @@ class Book extends Model {
         super.init({
             name: DataTypes.STRING,
             author: DataTypes.STRING,
-            description: DataTypes.STRING,
+            description: DataTypes.TEXT,
             releaseDate: DataTypes.DATE,
             imageURL: DataTypes.TEXT
         }, {
