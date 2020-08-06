@@ -3,9 +3,9 @@ const Book = require('../models/book');
 module.exports = {
     async getAll (req, res) {
         const books = await Book.findAll();
+        const filters = req.query;
 
-        if(req.query == {}){
-            const filters = req.query;
+        if(!(filters.name == undefined)){
 
             const book = await Book.findOne({
                 where: {
@@ -21,9 +21,8 @@ module.exports = {
             
             return res.status(200).json(book)
         }
-        
-        return res.status(200).json(books);
 
+        return res.status(200).json(books);
     },
 
     async getById (req, res) {
