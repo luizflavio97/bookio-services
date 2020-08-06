@@ -4,7 +4,26 @@ module.exports = {
     async getAll (req, res) {
         const books = await Book.findAll();
 
+        if(req.query == {}){
+            const filters = req.query;
+
+            const book = await Book.findOne({
+                where: {
+                    name: filters.name
+                }
+            });
+
+            if(!book){
+                return res.status(404).json({
+                    error: 'Livro não foi encontrado'
+                })
+            }
+            
+            return res.status(200).json(book)
+        }
+        
         return res.status(200).json(books);
+
     },
 
     async getById (req, res) {
@@ -19,16 +38,6 @@ module.exports = {
         } else {
             return res.json(book);
         }
-    },
-
-    async getBookByName (req, res) {
-        const { name } = req.params
-
-        const book = await Book.findOne({
-            where: {
-                name: name
-            }
-        });
     },
 
     async createBook (req, res) {

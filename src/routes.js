@@ -5,7 +5,6 @@ const routes = express.Router()
 
 routes.get('/books', BookController.getAll)
 routes.get('/books/:bookId', BookController.getById)
-routes.get('/books/:bookName', BookController.getBookByName)
 
 routes.post('/books', BookController.createBook)
 
